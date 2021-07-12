@@ -1,0 +1,5 @@
+*.log
+*-secret.yml
+*.parameters.json
+kafkacat.conf
+send-a2b.bash

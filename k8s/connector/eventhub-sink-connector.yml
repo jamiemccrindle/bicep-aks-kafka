@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: eventhub-sink-connector
+  labels:
+    strimzi.io/cluster: eventhub-kafka-connect
+spec:
+  class: org.apache.camel.kafkaconnector.azureeventhubs.CamelAzureeventhubsSinkConnector
+  tasksMax: 2
+  config:
+    camel.sink.path.namespace: ens-jmc-ping
+    camel.sink.path.eventHubName: ens-jmc-ping-receiver
+

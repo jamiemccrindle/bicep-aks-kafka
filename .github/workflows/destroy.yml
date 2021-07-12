@@ -1,0 +1,27 @@
+name: destroy
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+
+  destroy:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/checkout@v2
+
+    - name: Destroy
+      id: deploy-acr
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.23.0
+        inlineScript: |
+          az deployment group create --name destroy --resource-group rg-eventhub-kafka-connector-001 --template-file .github/workflows/empty.json --mode Complete
