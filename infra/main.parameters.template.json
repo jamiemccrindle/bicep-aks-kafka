@@ -8,6 +8,9 @@
       "companyBEventHubNamespaceName": {
         "value": "<value here>"
       },
+      "companyBCosmosDbAccountName": {
+        "value": "<value here>"
+      },
       "acrName": {
         "value": "<value here>"
       },
