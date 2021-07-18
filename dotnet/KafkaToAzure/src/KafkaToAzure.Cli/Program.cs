@@ -47,6 +47,23 @@ namespace KafkaToAzure.Cli
                 });
             });
 
+            app.Command("receiver", configCmd =>
+            {
+                var configOption = configCmd.Option<string>("--config", "Config File", CommandOptionType.SingleValue).IsRequired();
+                var topicOption = configCmd.Option<string>("--topic", "Topic Name", CommandOptionType.SingleValue).IsRequired();
+                var groupIdOption = configCmd.Option<string>("--group-id", "Group Id", CommandOptionType.SingleValue);
+                configCmd.OnExecuteAsync(async (token) =>
+                {
+                    var receiver = new KafkaMessageReceiver();
+                    await receiver.Run(new KafkaMessageReceiverArgs {
+                        Topic = topicOption.Value(),
+                        ConfigFile = configOption.Value(),
+                        GroupId = groupIdOption.HasValue() ? groupIdOption.Value() : "kafka-to-azure-receiver"
+                    }, CancellationToken.None);
+                    return 1;
+                });
+            });
+
             app.OnExecute(() =>
             {
                 Console.WriteLine("Specify a subcommand");
