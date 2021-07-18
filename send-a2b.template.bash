@@ -1,4 +1,4 @@
-echo '{"message": "ping"}' | kafkacat \
+kafkacat \
     -b <name>.servicebus.windows.net:9093 \
     -X security.protocol=sasl_ssl \
     -X sasl.mechanism=PLAIN \

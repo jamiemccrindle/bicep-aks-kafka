@@ -25,9 +25,14 @@ RUN apt-get update \
     && mkdir -p /home/${USERNAME}/.minikube \
     && chown ${USERNAME} /home/${USERNAME}/.minikube \
     # install java
-    && apt-get install -y default-jdk \
+    && apt-get install -y default-jdk maven dotnet-sdk-5.0 \
     # cleanup
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+
+RUN cd /tmp/ \
+    && wget https://downloads.apache.org/kafka/2.8.0/kafka_2.13-2.8.0.tgz \
+    && tar xzf kafka_2.13-2.8.0.tgz \
+    && mv kafka_2.13-2.8.0 /opt/kafka
 
 RUN cd /tmp && wget https://github.com/derailed/k9s/releases/download/v0.24.14/k9s_Linux_x86_64.tar.gz \
     && tar -xvf k9s_Linux_x86_64.tar.gz \

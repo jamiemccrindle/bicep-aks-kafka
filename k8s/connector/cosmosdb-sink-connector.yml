@@ -1,0 +1,20 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: cosmosdb-sink-connector
+  labels:
+    strimzi.io/cluster: azure-kafka-connect
+spec:
+  class: com.azure.cosmos.kafka.connect.sink.CosmosDBSinkConnector
+  tasksMax: 2
+  config:
+    format: json
+    topics: a2b
+    connect.cosmos.connection.endpoint: https://cosmos-jmc-company-a.documents.azure.com:443/
+    connect.cosmos.master.key: "${file:/opt/kafka/external-configuration/cosmoscompanyb/cosmoskey:cosmoskey}"
+    connect.cosmos.databasename: connect
+    connect.cosmos.containers.topicmap: a2b#a2b
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter.schemas.enable: false
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    key.converter.schemas.enable: false

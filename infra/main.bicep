@@ -1,6 +1,6 @@
 param location string = resourceGroup().location
 param companyAEventHubNamespaceName string
-param companyBEventHubNamespaceName string
+// param companyBEventHubNamespaceName string
 param companyBCosmosDbAccountName string
 param acrName string
 param ownerPrincipalId string
@@ -34,15 +34,15 @@ module companyAEventHubA2B 'eventhub/hub.bicep' = {
   }
 }
 
-module companyBEventHubNamespace 'eventhub/namespace.bicep' = {
-  name: 'companyBEventHubNamespace'
-  params: {
-    kafkaEnabled: true
-    location: location
-    name: companyBEventHubNamespaceName
-    skuName: 'Standard'
-  }
-}
+// module companyBEventHubNamespace 'eventhub/namespace.bicep' = {
+//   name: 'companyBEventHubNamespace'
+//   params: {
+//     kafkaEnabled: true
+//     location: location
+//     name: companyBEventHubNamespaceName
+//     skuName: 'Standard'
+//   }
+// }
 
 module companyBCosmosDbAccount 'cosmosdb/account.bicep' = {
   name: 'companyBCosmosDbAccount'

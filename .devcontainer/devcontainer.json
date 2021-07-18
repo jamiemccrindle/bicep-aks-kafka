@@ -19,7 +19,8 @@
 		"ms-kubernetes-tools.vscode-kubernetes-tools",
 		"ms-vscode.azurecli",
 		"ms-dotnettools.vscode-dotnet-runtime",
-		"ms-azuretools.vscode-bicep"
+		"ms-azuretools.vscode-bicep",
+		"ms-dotnettools.csharp"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

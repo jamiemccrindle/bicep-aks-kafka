@@ -25,9 +25,28 @@ kafkacat \
     -L
 
 kubectl apply -f k8s/connector/eventhub-company-a-secret.yml
+kubectl apply -f k8s/connector/cosmos-company-b-secret.yml
+kubectl apply -f k8s/connector/connect-cluster.yml
+kubectl apply -f k8s/connector/cosmosdb-sink-connector.yml
+
+kubectl apply -f k8s/connector/eventhub-company-a-secret.yml
 kubectl apply -f k8s/connector/eventhub-company-b-secret.yml
 kubectl apply -f k8s/connector/mirrormaker2-company-a-company-b.yml
 
 az eventhubs eventhub list --resource-group rg-eventhub-kafka-connector-001 --namespace-name ens-jmc-company-b --query '[].name'
 
 az eventhubs eventhub delete --resource-group rg-eventhub-kafka-connector-001 --namespace-name ens-jmc-company-b --name eventhub-company-a.a2b
+
+kubectl delete -f k8s/connector/cosmosdb-sink-connector.yml
+kubectl delete -f k8s/connector/connect-cluster.yml
+kubectl delete -f k8s/connector/cosmos-company-b-secret.yml
+kubectl delete -f k8s/connector/eventhub-company-a-secret.yml
+helm uninstall strimzi-kafka
+
+/opt/kafka/external-configuration/cosmoscompanyb/cosmoskey
+
+# Todo
+
+- [ ] connect .net to kafka and send and receive messages between kafka and cosmosdb
+- [x] try kafka sink connect with the MS kafka to cosmos db connector
+- [ ] try kafka source connect with the MS kafka to cosmos db connector

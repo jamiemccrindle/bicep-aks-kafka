@@ -3,3 +3,8 @@
 *.parameters.json
 kafkacat.conf
 send-a2b.bash
+connect.standalone.properties
+connect.sink.cosmos-company-b.properties
+connect.source.cosmos-company-b.properties
+bin/
+obj/
