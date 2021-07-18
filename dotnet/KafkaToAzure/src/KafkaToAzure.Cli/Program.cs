@@ -36,12 +36,14 @@ namespace KafkaToAzure.Cli
             {
                 var configOption = configCmd.Option<string>("--config", "Config File", CommandOptionType.SingleValue).IsRequired();
                 var topicOption = configCmd.Option<string>("--topic", "Topic Name", CommandOptionType.SingleValue).IsRequired();
+                var messagesToSendOption = configCmd.Option<int>("--messages-to-send", "Number of messages to send defaults to 1000", CommandOptionType.SingleValue);
                 configCmd.OnExecuteAsync(async (token) =>
                 {
                     var spammer = new KafkaMessageSpammer();
                     await spammer.Run(new KafkaMessageSpammerArgs {
                         Topic = topicOption.Value(),
-                        ConfigFile = configOption.Value() 
+                        ConfigFile = configOption.Value(),
+                        MessagesToSend = messagesToSendOption.HasValue() ? messagesToSendOption.ParsedValue : 1000,
                     }, CancellationToken.None);
                     return 1;
                 });

@@ -14,6 +14,7 @@ namespace KafkaToAzure.Cli
     {
         public string ConfigFile { get; set; }
         public string Topic { get; set; }
+        public int MessagesToSend { get; set; }
     }
 
 
@@ -29,18 +30,23 @@ namespace KafkaToAzure.Cli
             });
             var config = new ProducerConfig(configProperties);
             using var producer = new ProducerBuilder<string, string>(config).Build();
+            for(var i = 0; i < args.MessagesToSend; i++) {
             var key = Guid.NewGuid().ToString();
             var deliveryReport = await producer.ProduceAsync(
                 args.Topic, new Message<string, string>
                 {
                     Timestamp = new Timestamp(DateTime.UtcNow),
-                    Key = key,
+                    Key = JsonSerializer.Serialize(new
+                    {
+                        id = key
+                    }),
                     Value = JsonSerializer.Serialize(new
                     {
                         id = key
                     })
                 });
-            Console.WriteLine(JsonSerializer.Serialize(deliveryReport));
+                Console.WriteLine(JsonSerializer.Serialize(deliveryReport));
+            }
         }
     }
 }
